@@ -2,24 +2,19 @@ import React from "react";
 import { Label } from "../acernity/label";
 import { Input } from "../acernity/input";
 import { cn } from "../../lib/utils";
-import { textCustomColor } from "../../utils/Helper";
+import { registerValidation, textCustomColor } from "../../utils/Helper";
 import { BottomGradient } from "../Custom/BottomGradient";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 
 import { apiClient } from "../../lib/api-client";
 import { SIGNUP_ROUTES } from "../../utils/constant";
-
-interface RegisterDataType {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
+import { RegisterDataType, ResponseUserDataType } from "../../utils/types";
+import { useAppDispatch } from "../../store/hooks";
+import { setUserInfo } from "../../store/slices/authSlice";
 
 export function Register() {
-
-
+const dispatch=useAppDispatch()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,18 +24,9 @@ export function Register() {
     const lastName = formData.get("lastName") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const confirmPassword=formData.get("confirmPassword") as string
-
-    if(!password||!confirmPassword||!firstName||!lastName||!email){
-      console.log("all field required")
-       return 
-    }
+    const confirmPassword = formData.get("confirmPassword") as string;
 
 
-    if(password!==confirmPassword){
-      console.log("not correct")
-       return 
-    }
 
     const registerData: RegisterDataType = {
       firstName: firstName,
@@ -48,11 +34,33 @@ export function Register() {
       email: email,
       password: password,
     };
-    if (registerData) {
+    if (
+      registerValidation(
+        email,
+        password,
+        confirmPassword,
+        firstName,
+        lastName
+      ) &&
+      registerData
+    ) {
       try {
-        console.log(registerData,"registerDTA")
-        const response = await apiClient.post(SIGNUP_ROUTES,{registerData},{withCredentials:true});
-        console.log(response.data,"hello");
+        const response = await apiClient.post(
+          SIGNUP_ROUTES,
+          { registerData },
+          { withCredentials: true }
+        );
+
+         
+        if(response.data){
+          dispatch(setUserInfo(response.data))
+
+          let up:ResponseUserDataType=response.data
+
+          console.log(up,"is correct")
+        }
+
+        console.log(response.data, "hello");
       } catch (error) {
         console.error(error);
       }
