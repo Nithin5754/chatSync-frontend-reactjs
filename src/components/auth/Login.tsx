@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginType } from "../../utils/types";
 import { useAppDispatch } from "../../store/hooks";
 import { setUserInfo } from "../../store/slices/authSlice";
+import { toast } from "sonner";
 
 export function Login() {
   const navigate = useNavigate();
@@ -24,23 +25,29 @@ export function Login() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    setEmail(formData.get("email") as string);
-    setPassword(formData.get("password") as string);
+    const isEmail = formData.get("email") as string;
+    const isPassword = formData.get("password") as string;
 
-    const loginData: LoginType = {
-      email: email,
-      password: password,
-    };
-    if (loginValidation(email, password) && loginData) {
+    setEmail(isEmail);
+    setPassword(isPassword);
+
+    if (loginValidation(isEmail, isPassword)) {
+      const loginData: LoginType = {
+        email: isEmail,
+        password: isPassword,
+      };
       try {
         const response = await apiClient.post(
           LOGIN_ROUTES,
           { loginData },
           { withCredentials: true }
         );
+        console.log("response",response.status)
+
         if (response.data) {
           dispatch(setUserInfo(response.data));
         }
+
 
         if (!response.data.user.profileSetup) {
           setEmail("");
@@ -49,8 +56,10 @@ export function Login() {
         } else {
           navigate("/chat");
         }
-      } catch (error) {
-        console.error(error);
+      } catch (error:any) {
+         if(error.status===400){
+          toast.error("invalid credentials")
+         }
       }
     }
   };

@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -8,7 +8,7 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/index.ts";
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Provider store={store}>
         <Router>
@@ -26,5 +26,5 @@ createRoot(document.getElementById("root")!).render(
         </Router>
       </Provider>
     </ThemeProvider>
-  </StrictMode>
+
 );

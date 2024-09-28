@@ -6,7 +6,6 @@ import { registerValidation, textCustomColor } from "../../utils/Helper";
 import { BottomGradient } from "../Custom/BottomGradient";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
-
 import { apiClient } from "../../lib/api-client";
 import { SIGNUP_ROUTES } from "../../utils/constant";
 import { RegisterDataType, ResponseUserDataType } from "../../utils/types";
@@ -19,15 +18,12 @@ const dispatch=useAppDispatch()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
-
-
-
+    
     const registerData: RegisterDataType = {
       firstName: firstName,
       lastName: lastName,
