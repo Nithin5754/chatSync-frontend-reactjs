@@ -1,9 +1,9 @@
 
 import {
   IconArrowLeft,
-  IconSettings,
   IconUserBolt,
 } from "@tabler/icons-react";
+import { GroupIcon } from "lucide-react";
 
 
 
@@ -11,17 +11,17 @@ import {
   export const SideBarlinks = [
 
     {
-      label: "Profile",
+      label: "DIRECT MESSAGES",
       href: "#",
       icon: (
         <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
-      label: "Settings", 
+      label: "CHANNELS", 
       href: "#",
       icon: (
-        <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+        <GroupIcon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {

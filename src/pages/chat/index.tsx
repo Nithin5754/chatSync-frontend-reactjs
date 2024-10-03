@@ -3,6 +3,7 @@ import { userInfoSelector } from "../../store/slices/authSlice"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { toast } from "sonner"
+import ChatContainer from "../../components/chat/chat-container"
 
 const Chat = () => {
 
@@ -20,9 +21,7 @@ const Chat = () => {
   //   },[selector,navigate])
 
   return (
-    <div>
-      hello
-    </div>
+       <ChatContainer/>
   )
 }
 export default Chat
