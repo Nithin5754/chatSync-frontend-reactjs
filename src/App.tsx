@@ -6,6 +6,7 @@ import LandingPage from "./pages/landingPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import AuthRoutes from "./components/AuthRoutes";
 import useGetUserInfo, { AuthenticatedType } from "./utils/hooks/useGetUserInfo";
+import {  SideBarPage } from "./components/layout/SideBarPage";
 
 export default function App() {
 
@@ -23,8 +24,11 @@ export default function App() {
           <Route path="auth" element={<Auth />} />
         </Route>
         <Route element={<PrivateRoutes />}>
-          <Route path="chat" element={<Chat />} />
-          <Route path="profile" element={<Profile />} />
+          
+             <Route element={<SideBarPage/>}>
+             <Route path="chat" element={<Chat />} />
+             <Route path="profile" element={<Profile />} />
+             </Route>
         </Route>
         <Route path="*" element={<Navigate to={"auth"} />} />
       </Route>

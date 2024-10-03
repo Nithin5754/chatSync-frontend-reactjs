@@ -49,13 +49,13 @@ export function Login() {
         }
 
 
-        if (!response.data.user.profileSetup) {
-          setEmail("");
-          setPassword("");
-          navigate("/profile");
-        } else {
-          navigate("/chat");
-        }
+        // if (!response.data.user.profileSetup) {
+        //   setEmail("");
+        //   setPassword("");
+        //   navigate("/profile");
+        // } else {
+          // }
+          //   navigate("/chat");
       } catch (error:any) {
          if(error.status===400){
           toast.error("invalid credentials")

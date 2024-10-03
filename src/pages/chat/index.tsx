@@ -7,17 +7,17 @@ import { toast } from "sonner"
 const Chat = () => {
 
 
-  const selector=useSelector(userInfoSelector)
+  // const selector=useSelector(userInfoSelector)
 
-    const navigate=useNavigate()
+  //   const navigate=useNavigate()
 
-    useEffect(()=>{
-        if(selector&&!selector.user.profileSetup){
-          toast.error("profile setting is incomplete")
-          navigate('/profile')
-        }
+  //   useEffect(()=>{
+  //       if(selector&&!selector.user.profileSetup){
+  //         toast.error("profile setting is incomplete")
+  //         navigate('/profile')
+  //       }
 
-    },[selector,navigate])
+  //   },[selector,navigate])
 
   return (
     <div>

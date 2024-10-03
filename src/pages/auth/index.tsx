@@ -1,6 +1,6 @@
 import { Boxes } from "../../components/acernity/background-boxes";
 import AuthComponents from "../../components/auth";
-import Logo from "../../components/logo";
+import {Logo} from "../../components/logo";
 
 
 
