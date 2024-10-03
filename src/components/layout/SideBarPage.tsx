@@ -33,7 +33,7 @@ export function SideBarPage() {
             </div>
           </div>
           <div>
-            <SidebarLink
+            {/* <SidebarLink
               link={{
                 label: "Manu Arora",
                 href: "#",
@@ -47,7 +47,7 @@ export function SideBarPage() {
                   />
                 ),
               }}
-            />
+            /> */}
           </div>
         </SidebarBody>
       </Sidebar>
