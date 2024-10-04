@@ -5,7 +5,7 @@ import { IconMenu2, IconX } from "@tabler/icons-react";
 import { cn } from "../../lib/utils";
 import { Link, LinkProps } from "react-router-dom";
 
-interface Links {
+export interface Links {
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;

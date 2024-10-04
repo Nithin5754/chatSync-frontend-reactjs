@@ -2,15 +2,49 @@
 
 
 import { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
+import { Links, Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 
 
 import { cn } from "../../lib/utils";
-import { Outlet } from "react-router-dom";
+import { LinkProps, Outlet } from "react-router-dom";
 import { Logo } from "../logo";
 import { LogoIcon } from "../logo/LogoIcon";
 import { SideBarlinks } from "../../utils/SideBarConstant";
+import { Plus } from "lucide-react";
+import { ContactsContainer } from "../chat/contacts-container";
 
+
+
+const HOD = (Component: React.ComponentType< {
+  link: Links;
+  className?: string;
+  props?: LinkProps
+}>) => {
+  return (props: { link: Links; idx: number }) => {
+      if(props.link.label==='DIRECT MESSAGES' ){
+        return (
+          <div className="flex flex-row justify-between">
+            <Component {...props} />
+            <div className="">
+          
+            <ContactsContainer/>
+            </div>
+          </div>
+        );
+      }else{
+        return <Component {...props} />
+        
+          
+      
+        
+        
+      }
+  };
+};
+
+
+
+ const  EnchanedComponents=HOD(SidebarLink)
 
 export function SideBarPage() {
 
@@ -27,27 +61,13 @@ export function SideBarPage() {
           <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden ">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
-              {SideBarlinks.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
-              ))}
+              {SideBarlinks.map((link, idx) =>{
+             return <EnchanedComponents key={idx} link={link} idx={idx} />
+              } )}
             </div>
           </div>
           <div>
-            {/* <SidebarLink
-              link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <img
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            /> */}
+        
           </div>
         </SidebarBody>
       </Sidebar>
@@ -55,5 +75,11 @@ export function SideBarPage() {
     </div>
   );
 }
+
+
+
+
+
+
 
 

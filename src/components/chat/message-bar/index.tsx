@@ -2,7 +2,7 @@ import { Paperclip, SendHorizontal } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../../lib/utils";
 import { customBgColor } from "../../../utils/Helper";
-import EmojiPickerComponents from "../../emoji-picker";
+import EmojiPickerComponents from "../emoji-picker";
 import InputMessage from "../input-message";
 
 const MessageBar = () => {
