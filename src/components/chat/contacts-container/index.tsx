@@ -18,7 +18,7 @@ export function ContactsContainer() {
         <Button variant="outline" className="bg-transparent outline-none hover:bg-transparent  border-none"><Plus  size={16}/></Button>
       </PopoverTrigger>
    
-     <PopoverContent className=" w-[400px] h-[500px] ml-24 bg-neutral-900 z-50 ">
+     <PopoverContent className=" w-[400px] h-[500px] ml-24 bg-neutral-900  ">
         <div className="grid gap-4">
           <div className="space-y-2">
           <div className=" flex h-[7vh] rounded-md dark:bg-neutral-800 ">
@@ -43,3 +43,7 @@ export function ContactsContainer() {
     </Popover>
   )
 }
+
+
+
+

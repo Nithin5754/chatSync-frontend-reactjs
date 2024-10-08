@@ -2,15 +2,25 @@ import { LottieAnimation } from "../../../lootie"
 
 import Glow from '../../../../json/glow.json'
 import SearchFriendsList from "../search-friends"
-import { SearchIcon, UserCircle2, UserPlus } from "lucide-react"
+import {  UserPlus } from "lucide-react"
+
+import { currentUsersSelector } from "../../../../store/slices/userSlice"
+import { useAppSelector } from "../../../../store/hooks"
 
 
 const SearchListContainer = () => {
+
+  const searchUsers=useAppSelector(currentUsersSelector)
+
+
+  
+
+
   return (
     <>
     
     {
-      false?(
+      searchUsers[0]?.length>0?(
         <>
          <SearchFriendsList/>
         </>

@@ -2,49 +2,25 @@
 
 
 import { useState } from "react";
-import { Links, Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
+import {Sidebar, SidebarBody, SidebarLink } from "../ui/sidebar";
 
 
 import { cn } from "../../lib/utils";
-import { LinkProps, Outlet } from "react-router-dom";
+import {  Outlet } from "react-router-dom";
 import { Logo } from "../logo";
 import { LogoIcon } from "../logo/LogoIcon";
 import { SideBarlinks } from "../../utils/SideBarConstant";
-import { Plus } from "lucide-react";
-import { ContactsContainer } from "../chat/contacts-container";
+import { EnhancedComponents } from "../Hoc/SideBarLinkHoc";
 
 
 
-const HOD = (Component: React.ComponentType< {
-  link: Links;
-  className?: string;
-  props?: LinkProps
-}>) => {
-  return (props: { link: Links; idx: number }) => {
-      if(props.link.label==='DIRECT MESSAGES' ){
-        return (
-          <div className="flex flex-row justify-between">
-            <Component {...props} />
-            <div className="">
-          
-            <ContactsContainer/>
-            </div>
-          </div>
-        );
-      }else{
-        return <Component {...props} />
-        
-          
-      
-        
-        
-      }
-  };
-};
 
 
 
- const  EnchanedComponents=HOD(SidebarLink)
+
+
+
+
 
 export function SideBarPage() {
 
@@ -62,7 +38,7 @@ export function SideBarPage() {
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
               {SideBarlinks.map((link, idx) =>{
-             return <EnchanedComponents key={idx} link={link} idx={idx} />
+             return <EnhancedComponents key={idx} link={link} idx={idx} />
               } )}
             </div>
           </div>

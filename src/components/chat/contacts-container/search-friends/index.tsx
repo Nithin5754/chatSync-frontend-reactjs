@@ -1,22 +1,29 @@
 import { Separator } from "@radix-ui/react-dropdown-menu"
 import { ScrollArea } from "../../../ui/scroll-area"
+import { useAppSelector } from "../../../../store/hooks"
+import { currentUsersSelector, userType } from "../../../../store/slices/userSlice"
 
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `hello.${a.length - i}`
-)
+import SearchUserShimmerUI from "./shimmerUI"
+import SearchFriendDetails from "./search-friend-details"
+
+
+
 const SearchFriendsList = () => {
+  const searchUsers=useAppSelector(currentUsersSelector)
   return (
     <ScrollArea className="h-[415px]  outline-none border-none w-full rounded-md ">
       <div className="p-4">
       
-        {tags.map((tag) => (
+        {searchUsers[0]&&searchUsers[0].length>0?searchUsers[0].map((user:userType) => (
           <>
-            <div key={tag} className="text-sm hover:bg-neutral-800 px-4 py-2 rounded-md transition-all duration-500">
-              {tag}
-            </div>
-            <Separator className="my-2" />
+       <SearchFriendDetails list={user}/>
+            <Separator className="my-2 " />
           </>
-        ))}
+        )):(
+            <SearchUserShimmerUI/>
+        )
+      
+      }
       </div>
     </ScrollArea>
   )
