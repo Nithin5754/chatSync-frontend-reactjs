@@ -1,6 +1,5 @@
 import ChatHeader from "../chat-header";
 
-import MessageBar from "../message-bar";
 import AuthChatContainer from "./AuthChat-Routes";
 
 const ChatContainer = () => {

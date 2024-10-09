@@ -27,6 +27,7 @@ export default function App() {
           
              <Route element={<SideBarPage/>}>
              <Route path="chat" element={<Chat />} />
+             <Route path=":chatId" element={<Chat/>}/>
              <Route path="profile" element={<Profile />} />
              </Route>
         </Route>

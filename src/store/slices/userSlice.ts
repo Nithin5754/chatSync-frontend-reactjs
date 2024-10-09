@@ -11,6 +11,7 @@ export interface userType {
   email: string;
   color: number;
   profileSetup: boolean;
+  username:string;
 }
 
 interface keyArray {

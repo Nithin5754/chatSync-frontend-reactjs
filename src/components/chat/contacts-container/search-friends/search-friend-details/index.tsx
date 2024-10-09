@@ -4,6 +4,7 @@ import { changeColor } from "../../../../../utils/colorHelper";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../../../store/hooks";
 import { setCurrentChatPage } from "../../../../../store/slices/singleChatCurPageSlice";
+import { useNavigate } from "react-router-dom";
 
 interface Type {
   list: userType;
@@ -12,6 +13,8 @@ interface Type {
 const SearchFriendDetails = (params: Type) => {
   const dispatch = useAppDispatch();
   const [color, setcolor] = useState("");
+
+  const navigate=useNavigate()
   useEffect(() => {
     let isColor = "bg-" + changeColor(params.list.firstName[0]) + "-600";
     setcolor(isColor);
@@ -26,12 +29,13 @@ const SearchFriendDetails = (params: Type) => {
   }) => {
     if (user !== null && type !== null) {
       dispatch(setCurrentChatPage({ user, type }));
+      navigate(`${user.username}`,{replace:true})
     }
   };
 
   return (
     <div
-      key={params.list.id}
+    
       className="flex justify-between text-sm hover:bg-neutral-800 px-4 py-2 rounded-md transition-all duration-500"
     >
       <div className="flex gap-4">
@@ -47,7 +51,7 @@ const SearchFriendDetails = (params: Type) => {
             <span className="">{params.list.lastName}</span>
           </h6>
           <div className="overflow-x-hidden w-[130px]  font-thin ">
-            {params.list.email}
+            {params.list.username}
           </div>
         </div>
       </div>

@@ -19,6 +19,8 @@ export const USER_LOGIN_INFO=`${AUTH_ROUTES}/userInfo`
 
 export const USER_LOGOUT_INFO=`${AUTH_ROUTES}/logout`
 
+export const USER_HAS_ISUSERNAME_ALREADY_EXIST=`${AUTH_ROUTES}/isUserExist`
+
 // VITE_SERVER_URL="http://localhost:4000"
 
 
@@ -29,3 +31,5 @@ export const USER_LOGOUT_INFO=`${AUTH_ROUTES}/logout`
     const CONTACTS_ROUTES="/api/contacts"
 
 export const SEARCH_USERS=`${CONTACTS_ROUTES}/searchUser`
+
+export const CHAT_ID_BY_USERNAME=`${CONTACTS_ROUTES}/chatIdByUsername`

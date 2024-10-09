@@ -16,7 +16,7 @@ const SearchFriendsList = () => {
       
         {searchUsers[0]&&searchUsers[0].length>0?searchUsers[0].map((user:userType) => (
           <>
-       <SearchFriendDetails list={user}/>
+       <SearchFriendDetails key={user.id} list={user}/>
             <Separator className="my-2 " />
           </>
         )):(

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../acernity/label";
 import { Input } from "../acernity/input";
 import { cn } from "../../lib/utils";
@@ -7,13 +7,46 @@ import { BottomGradient } from "../Custom/BottomGradient";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { apiClient } from "../../lib/api-client";
-import { SIGNUP_ROUTES } from "../../utils/constant";
-import { RegisterDataType, ResponseUserDataType } from "../../utils/types";
+import {
+  SIGNUP_ROUTES,
+  USER_HAS_ISUSERNAME_ALREADY_EXIST,
+} from "../../utils/constant";
+import { RegisterDataType } from "../../utils/types";
 import { useAppDispatch } from "../../store/hooks";
 import { setUserInfo } from "../../store/slices/authSlice";
 
 export function Register() {
-const dispatch=useAppDispatch()
+  const dispatch = useAppDispatch();
+
+  const [usernameData, setUsernameData] = useState<string | null>(null);
+
+  const [isUserFoundMsg, setUserNameFound] = useState<string | null>(null);
+
+  useEffect(() => {
+    const trimmedUsername = usernameData?.trim();
+    const timer = setTimeout(() => {
+      if (usernameData !== null && trimmedUsername !== "") {
+        handleChange();
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [usernameData]);
+
+  const handleChange = async () => {
+    const isUserExist = await apiClient.post(
+      USER_HAS_ISUSERNAME_ALREADY_EXIST,
+      { username: usernameData },
+      { withCredentials: true }
+    );
+    if (
+      isUserExist &&
+      isUserExist.status === 200 &&
+      typeof isUserExist.data.message === "string"
+    ) {
+      setUserNameFound(isUserExist.data.message);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,12 +56,14 @@ const dispatch=useAppDispatch()
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
-    
+    const userName = formData.get("username") as string;
+
     const registerData: RegisterDataType = {
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: password,
+      username: userName,
     };
     if (
       registerValidation(
@@ -38,7 +73,8 @@ const dispatch=useAppDispatch()
         firstName,
         lastName
       ) &&
-      registerData
+      registerData &&
+      isUserFoundMsg !== "already exist"
     ) {
       try {
         const response = await apiClient.post(
@@ -47,16 +83,9 @@ const dispatch=useAppDispatch()
           { withCredentials: true }
         );
 
-         
-        if(response.data){
-          dispatch(setUserInfo(response.data))
-
-          let up:ResponseUserDataType=response.data
-
-          console.log(up,"is correct")
+        if (response.data) {
+          dispatch(setUserInfo(response.data));
         }
-
-        console.log(response.data, "hello");
       } catch (error) {
         console.error(error);
       }
@@ -102,6 +131,31 @@ const dispatch=useAppDispatch()
             type="email"
           />
         </LabelInputContainer>
+
+        <LabelInputContainer>
+          <Label htmlFor="username">user name</Label>
+          <Input
+            id="username"
+            name="username"
+            placeholder="olly123"
+            type="text"
+            onChange={(e) => setUsernameData(e.target.value)}
+          />
+          <>
+            {isUserFoundMsg && (
+              <h1
+                className={
+                  isUserFoundMsg === "already exist"
+                    ? "text-red-800 text-sm text-center"
+                    : "text-green-600 text-sm text-center"
+                }
+              >
+                {isUserFoundMsg}
+              </h1>
+            )}
+          </>
+        </LabelInputContainer>
+
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
           <Input

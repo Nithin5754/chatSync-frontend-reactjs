@@ -1,25 +1,44 @@
-import { useSelector } from "react-redux"
-import { userInfoSelector } from "../../store/slices/authSlice"
-import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
-import { toast } from "sonner"
+
+import { useNavigate, useParams } from "react-router-dom";
 import ChatContainer from "../../components/chat/chat-container"
+import { useEffect } from "react";
+import { apiClient } from "../../lib/api-client";
+import { CHAT_ID_BY_USERNAME, SEARCH_USERS } from "../../utils/constant";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { currentUserChatPage, setCurrentChatPage } from "../../store/slices/singleChatCurPageSlice";
 
 const Chat = () => {
 
 
-  // const selector=useSelector(userInfoSelector)
+  const { chatId} = useParams();
 
-  //   const navigate=useNavigate()
+const dispatch=useAppDispatch()
 
-  //   useEffect(()=>{
-  //       if(selector&&!selector.user.profileSetup){
-  //         toast.error("profile setting is incomplete")
-  //         navigate('/profile')
-  //       }
+const navigate=useNavigate()
 
-  //   },[selector,navigate])
+const currentUserChatPageDetails=useAppSelector(currentUserChatPage)
 
+  useEffect(()=>{
+    if(chatId&&typeof chatId ==='string'&&currentUserChatPageDetails===null){
+      findChatAddress()
+    }
+  },[chatId])
+
+
+  async function findChatAddress() {
+    
+      let findChatDetails=await apiClient.post(CHAT_ID_BY_USERNAME,{chatId},{withCredentials:true})
+
+      if(findChatDetails&&findChatDetails.data.data!=='empty users'){
+        dispatch(setCurrentChatPage({ user:findChatDetails.data.data, type:"single" }));
+
+
+      }else if(findChatDetails&&findChatDetails.data.data==='empty users'||findChatDetails.status!==200){
+        navigate('/chat')
+      }
+     
+    
+  }
   return (
        <ChatContainer/>
   )

@@ -18,7 +18,7 @@ const ChatHeader = () => {
                 {chatDetails.firstName} {chatDetails.lastName}
               </h6>
               <h5 className="font-thin text-sm m-auto">
-                {chatDetails.email} 
+                {chatDetails.username} 
               </h5>
             </div>
            </div>
