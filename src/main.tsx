@@ -7,6 +7,7 @@ import { ThemeProvider } from "./components/ui/theme.provider.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/index.ts";
+import { SocketProvider } from "./lib/context.tsx";
 createRoot(document.getElementById("root")!).render(
 
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -16,10 +17,10 @@ createRoot(document.getElementById("root")!).render(
             <Route
               path="/*"
               element={
-                <>
+                <SocketProvider>
                   <App />
                   <Toaster duration={5000} closeButton />
-                </>
+                </SocketProvider>
               }
             />
           </Routes>
