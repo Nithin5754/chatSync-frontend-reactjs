@@ -1,18 +1,41 @@
-import { Paperclip, SendHorizontal } from "lucide-react";
+import { Paperclip, Receipt, SendHorizontal } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../../lib/utils";
 import { customBgColor } from "../../../utils/Helper";
 import EmojiPickerComponents from "../emoji-picker";
 import InputMessage from "../input-message";
+import { useSocket } from "../../../lib/context";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
+
+import { userInfoSelector } from "../../../store/slices/authSlice";
+import {
+  currentChatPageType,
+  currentUserChatPage,
+
+} from "../../../store/slices/singleChatCurPageSlice";
 
 const MessageBar = () => {
   const [message, setMessage] = useState("");
+  const userinfo = useAppSelector(userInfoSelector);
 
+  const currentUserChatPageDetails = useAppSelector(currentUserChatPage);
+  const socket: any = useSocket();
+  const dispatch = useAppDispatch();
   const updateMessage = (message: string) => {
     setMessage(message);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (socket) {
+      socket.current.emit("sendMessage", {
+        sender: userinfo?.user.id,
+        recipient: currentUserChatPageDetails?.id,
+        messageType: "text",
+        content: message,    
+        fileUrl: undefined,
+      });
+    }
+  };
 
   return (
     <div className="h-[10vh] flex  justify-center items-center px-6 mb-6 gap-4">
